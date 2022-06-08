@@ -6,7 +6,7 @@
 #include <string>
 #include <QPushButton>
 #include <QTextEdit>
-#include "listagrafica.h"
+#include "Jogador.h"
 
 class Janela : public QMainWindow
 {
@@ -14,7 +14,8 @@ class Janela : public QMainWindow
     QPushButton *Salvar;
     QPushButton *Abrir;
     QTextEdit *editor;
-    std::vector<ListaGrafica*> listas;
+    Jogador* Jogador1;
+    Jogador* Jogador2;
     void recalcularPosicoes();
 public:
     explicit Janela(QWidget *parent = nullptr);
