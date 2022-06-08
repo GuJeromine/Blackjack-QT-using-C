@@ -1,62 +1,66 @@
-#include "listagrafica.h"
-#include "janela.h"
+#include "Jogador.h"
+#include "Janela.h"
 #include "Baralho.h"
 #include <QInputDialog>
 #include <QPainter>
 #include <QMessageBox>
 
-int ListaGrafica::GanhadorDefinido;
-int ListaGrafica::NumeroDeListas = 0;
-int ListaGrafica::SomaLista1 = 0;
-int ListaGrafica::SomaLista2 = 0;
-int ListaGrafica::Turno = 0;
-int ListaGrafica::AuxiliarDeDesistencia = 1;
-ListaGrafica::ListaGrafica(QWidget *parent) : QFrame(parent){
+int Jogador::GanhadorDefinido;
+int Jogador::NumeroDeJogadores = 0;
+int Jogador::SomaJogador1 = 0;
+int Jogador::SomaJogador2 = 0;
+int Jogador::Turno = 0;
+int Jogador::AuxiliarDeDesistencia = 1;
+Jogador::Jogador(QWidget *parent) : QFrame(parent){
+    baralho = Baralho::getInstancia();
+    //qDebug() << baralho;
     TemA = false;
     Desistiu = false;
-    Ganhou = false;
     Soma = 0;
-    NumeroDaLista = NumeroDeListas;
-    NumeroDeListas++;
+    NumeroDoJogador = NumeroDeJogadores;
+    NumeroDeJogadores++;
+    //qDebug() << baralho->getTam();
 }
-void ListaGrafica::mousePressEvent(QMouseEvent *event) {
+void Jogador::mousePressEvent(QMouseEvent *event) {
     std::string sum = "Jogador1";
     std::string sdois = "Jogador2";
     std::string semp = "Empate";
 
-    if(SomaLista1 > 21){
+    if(SomaJogador1 > 21){
     resultMessage(sdois);
     GanhadorDefinido = true;
     }
-    else if(SomaLista2 > 21){
+    else if(SomaJogador2 > 21){
      resultMessage(sum);
      GanhadorDefinido = true;
     }
-    else if(SomaLista1 == 21){
+    else if(SomaJogador1 == 21){
      resultMessage(sum);
      GanhadorDefinido = true;
     }
-    else if(SomaLista2 == 21){
+    else if(SomaJogador2 == 21){
      resultMessage(sdois);
      GanhadorDefinido = true;
     }
     else if(GanhadorDefinido == true){
-        if(SomaLista1 < 21 and SomaLista1 > SomaLista2)
+        if(SomaJogador1 < 21 and SomaJogador1 > SomaJogador2)
         resultMessage(sum);
-        if(SomaLista2 < 21 and SomaLista2 > SomaLista1)
+        if(SomaJogador2 < 21 and SomaJogador2 > SomaJogador1)
         resultMessage(sdois);
     }
-    else if(AuxiliarDeDesistencia == 2 and Desistiu == false and SomaLista1 > SomaLista2 and (Turno % 2 == 0)){
+    else if(AuxiliarDeDesistencia == 2 and Desistiu == false and SomaJogador1 > SomaJogador2 and (Turno % 2 == 0)){
         GanhadorDefinido = true;
         resultMessage(sum);
     }
-    else if(AuxiliarDeDesistencia == 2 and Desistiu == false and SomaLista2 > SomaLista1 and (Turno % 2 == 1)){
+    else if(AuxiliarDeDesistencia == 2 and Desistiu == false and SomaJogador2 > SomaJogador1 and (Turno % 2 == 1)){
         GanhadorDefinido = true;
         resultMessage(sdois);
     }
-    if (event->button() == Qt::LeftButton and Baralho::getTam() > 0 and Desistiu == false and (Soma < 21) and GanhadorDefinido == 0 and
-            (Turno % 2 == NumeroDaLista)){
-        int NumeroSorteado = Baralho::SortearCarta();
+    if (event->button() == Qt::LeftButton and baralho->getTam() > 0 and Desistiu == false and (Soma < 21) and GanhadorDefinido == 0 and
+            (Turno % 2 == NumeroDoJogador)){
+        qDebug() << "Teste";
+        qDebug() << baralho->getTam();
+        int NumeroSorteado = baralho->SortearCarta();
         qDebug() << NumeroSorteado;
         int NaipeSorteada = NumeroSorteado / 13;
         NumeroSorteado = NumeroSorteado % 13;
@@ -85,7 +89,6 @@ void ListaGrafica::mousePressEvent(QMouseEvent *event) {
 
         if(Soma == 21){
             GanhadorDefinido = 1;
-            Ganhou = true;
         }
         if(Soma > 21 and TemA == true){
             TemA = false;
@@ -95,10 +98,10 @@ void ListaGrafica::mousePressEvent(QMouseEvent *event) {
             GanhadorDefinido = true;           
         }
         if(Turno % 2 == 0){
-            SomaLista1 = Soma;
+            SomaJogador1 = Soma;
         }
         if(Turno % 2 == 1){
-            SomaLista2 = Soma;
+            SomaJogador2 = Soma;
         }
         CartaSoma.NaipeDaCarta = 4;
         CartaSoma.NumDaCarta = Soma;
@@ -107,17 +110,17 @@ void ListaGrafica::mousePressEvent(QMouseEvent *event) {
         Turno = Turno + AuxiliarDeDesistencia;
     }
    else if(event->button() == Qt::RightButton and Desistiu == false and (Soma < 21) and GanhadorDefinido == 0 and
-           (Turno % 2 == NumeroDaLista)){
-    if(AuxiliarDeDesistencia == 2 and SomaLista1 == SomaLista2)
+           (Turno % 2 == NumeroDoJogador)){
+    if(AuxiliarDeDesistencia == 2 and SomaJogador1 == SomaJogador2)
     {
         resultMessage(semp);
         GanhadorDefinido = true;
     }
     Desistiu = true;
-    if(NumeroDaLista == 0 and SomaLista1 < SomaLista2){
+    if(NumeroDoJogador == 0 and SomaJogador1 < SomaJogador2){
         GanhadorDefinido = true;
     }
-    if(NumeroDaLista == 1 and SomaLista2 < SomaLista1){
+    if(NumeroDoJogador == 1 and SomaJogador2 < SomaJogador1){
         GanhadorDefinido = true;
     }
     AuxiliarDeDesistencia = 2;
@@ -125,12 +128,12 @@ void ListaGrafica::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-void ListaGrafica::resultMessage(std::string &s) const
+void Jogador::resultMessage(std::string &s) const
 {
     QMessageBox::information(nullptr, "Vencedor", s.c_str());
 }
 
-void ListaGrafica::paintEvent(QPaintEvent *event) {
+void Jogador::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
     QPainter painter(this);
     QPen pen;
@@ -299,8 +302,8 @@ void ListaGrafica::paintEvent(QPaintEvent *event) {
     }
     pen.setColor(Qt::white);
     painter.setPen(pen);
-    if(NumeroDaLista == 0)
+    if(NumeroDoJogador == 0)
     painter.drawText(20,5,60,50, Qt::AlignCenter, "Jogador 1");
-    else if(NumeroDaLista == 1)
+    else if(NumeroDoJogador == 1)
     painter.drawText(20,5,60,50, Qt::AlignCenter, "Jogador 2");
 }
