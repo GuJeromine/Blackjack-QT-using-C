@@ -4,11 +4,11 @@ QT = core gui widgets
 
 SOURCES += \
     Baralho.cpp \
-    janela.cpp \
-    listagrafica.cpp \
+    Janela.cpp \
+    Jogador.cpp \
     main.cpp
 
 HEADERS += \
     Baralho.h \
-    janela.h \
-    listagrafica.h
+    Janela.h \
+    Jogador.h
