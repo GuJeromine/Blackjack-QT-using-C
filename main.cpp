@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "janela.h"
+#include "Janela.h"
 
 int main(int argc, char* argv[]) {
 
