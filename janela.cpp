@@ -1,5 +1,6 @@
-#include "janela.h"
+#include "Jogador.h"
 #include "Baralho.h"
+#include "Janela.h"
 #include <vector>
 #include <QMenuBar>
 #include <QMenu>
@@ -9,6 +10,7 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QMainWindow>
+#include <cstdio>
 
 Janela::Janela(QWidget *parent)
     : QMainWindow{parent}
@@ -22,18 +24,43 @@ Janela::Janela(QWidget *parent)
     Abrir->setGeometry(1250, 350, 100, 275);
     connect(Salvar, SIGNAL(clicked(bool)),this,SLOT(SalvarLista()));
     connect(Abrir, SIGNAL(clicked(bool)),this,SLOT(AbrirLista()));
-    ListaGrafica* lista = new ListaGrafica(this);
-    ListaGrafica* lista2 = new ListaGrafica(this);
-    listas.push_back(lista);
-    listas.push_back(lista2);
-    lista->setGeometry(50, 25, 1150, 275);
-    lista2->setGeometry(50, 350, 1150, 275);
-    lista->show();
-    lista2->show();
+    Jogador* Jogador1 = new Jogador(this);
+    Jogador* Jogador2 = new Jogador(this);
+    Jogador1->setGeometry(50, 25, 1150, 275);
+    Jogador2->setGeometry(50, 350, 1150, 275);
+    Jogador1->show();
+    Jogador2->show();
 }
 
 void Janela::SalvarLista() {
+    /*FILE* file;
+    try{
+    file = fopen("Salvo.txt", "w");
+    if(file == NULL){
+        throw -1;
+    }
+    ListaGrafica* lista2 = listas.pop_back();
+    ListaGrafica* lista = listas.pop_back();
+    fprintf(file,"%d\n", lista->Elementos.size());
+    std::vector<Carta>::iterator it = lista->Elementos.begin();
+    for(; it != lista->Elementos.end(); it++){
+        fprintf(file, "%d ", *it);
+    }
+    fprintf(file, "\n");
+    fprintf(file,"%d\n", lista2->Elementos.size());
+    it = lista2->Elementos.begin();
+    for(; it != lista2->Elementos.end(); it++){
+        fprintf(file, "%d ", *it);
+    }
+    fprintf(file, "\n");
 
+
+
+    fclose(file);
+    }
+    catch(int ex){
+
+    }*/
 }
 
 void Janela::AbrirLista() {
