@@ -1,5 +1,5 @@
-#ifndef LISTAGRAFICA_H
-#define LISTAGRAFICA_H
+#ifndef JOGADOR_H
+#define JOGADOR_H
 
 #include <QFrame>
 #include <QMouseEvent>
@@ -8,31 +8,31 @@
 #include <string>
 #include "Baralho.h"
 
-class ListaGrafica : public QFrame
+class Jogador : public QFrame
 {
     std::vector<Carta> Elementos;
     int Soma;
-    int NumeroDaLista;
-    static int NumeroDeListas;
+    int NumeroDoJogador;
+    static int NumeroDeJogadores;
     static int GanhadorDefinido;
-    static int SomaLista1;
-    static int SomaLista2;
+    static int SomaJogador1;
+    static int SomaJogador2;
     static int Turno;
     static int AuxiliarDeDesistencia;
     bool TemA;
     bool Desistiu;
-    bool Ganhou;
+    Baralho* baralho;
 public:
-    ListaGrafica(QWidget* parent = nullptr);
+    Jogador(QWidget* parent = nullptr);
     void mousePressEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
     void resultMessage(std::string &s) const;
     int getSoma(){
-        Soma;
+       return Soma;
     }
-    int setSoma(int SomaArquivo){
+    void setSoma(int SomaArquivo){
         Soma = SomaArquivo;
     }
 };
 
-#endif // LISTAGRAFICA_H
+#endif // JOGADOR_H
