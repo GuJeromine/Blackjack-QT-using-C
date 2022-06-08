@@ -2,11 +2,16 @@
 #define BARALHO_H
 #include <vector>
 class Baralho{
-    static std::vector<int> baralho;
+    static Baralho* Instancia;
+    std::vector<int> baralho;
+    Baralho(){};
 public:
-    static int SortearCarta();
-    static void EmbaralharBaralho();
-    static int getTam();
+    Baralho (const Baralho& Obj) = delete;
+    Baralho operator=(Baralho Obj) = delete;
+    static Baralho* getInstancia();
+    int SortearCarta();
+    void EmbaralharBaralho();
+    int getTam();
 };
 
 class Carta{
