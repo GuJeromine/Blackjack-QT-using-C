@@ -1,0 +1,6 @@
+Como usar o programa: O programa tem as funcionalidades do jogo Blackjack conhecido também como 21, mas ele funciona no modo 2 jogadores offline na mesma maquina,  
+basta clicar com o botão esquerdo para pegar uma carta do baralho e botão direito caso queira parar de comprar carta. O jogador que chegar primeiro em 21 ou chegar
+mais próximo de 21 sem ultrapassar o valor vence, se um jogador ultrapassa 21 automaticamente perde. O vencedor é definido quando os dois jogadores clicam o botão 
+direito, um jogador passa de 21, ou quando um jogador consegue a soma exatamente igual a 21.
+
+Regra para a carta A: O ás no blackjack vale 11. O interessante dessa carta é que ela vem com a possibilidade de reduzir seu valor para 1, se necessário.
